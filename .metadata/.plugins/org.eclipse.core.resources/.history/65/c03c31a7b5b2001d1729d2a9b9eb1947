@@ -1,0 +1,14 @@
+<%@ page contentType="text/html;charset=utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" %>
+<html>
+<head>
+	<title>Home</title>
+</head>
+<body>
+<h1>
+	url을 리턴하지 않는(void) 인 getYoil.ㅓ네 
+</h1>
+
+</body>
+</html>
