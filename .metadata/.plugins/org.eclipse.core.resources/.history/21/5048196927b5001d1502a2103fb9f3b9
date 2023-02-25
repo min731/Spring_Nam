@@ -1,0 +1,133 @@
+package com.fastcampus.ch2;
+
+import java.io.IOException;
+import java.util.Calendar;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+// Ctrl+Shift+O 자동 import
+
+
+@Controller
+// 년,월,일을 입력하면 무슨 요일인지 알려주는 프로그램
+public class YoilTellerMVC5 {
+	
+	@ExceptionHandler(Exception.class)
+	public String cathcher(Exception ex) {
+		ex.printStackTrace();
+		return "yoilError";
+	}
+	
+	// HttpServletRequest 사용자 param 받는 객체
+	// HttpServletResponse 브라우저에 출력해주는 객체
+	
+	// 요청받는 변수가 여러개 일 때, 하나로 합치기 Mydate date
+	@RequestMapping("/getYoilMVC5")
+//	public String main(@ModelAttribute("Mydate") Mydate date,Model model){
+	// 같은 의미
+	// ModelAttribute 생략 가능
+	public String main(Mydate myDate, BindingResult result){
+		
+		System.out.println("result " + result);
+	
+		// 0. yoilError를 위한 유효성 검사
+		if(!isValid(myDate))
+			return "yoilError";
+		
+		
+		// 입력 관심사 생략하기
+		// 1. 입력
+		// main의 매개변수로 받아야함
+//		String year = request.getParameter("year");
+//		String month = request.getParameter("month");
+//		String day = request.getParameter("day");
+//		int yyyy =Integer.parseInt(year);
+//		int mm = Integer.parseInt(month);
+//		int dd = Integer.parseInt(day);		
+		
+		
+		
+		
+		
+		// Refactor - Extract Method로 별도로 정리해줌
+		// 2. 작업
+		
+
+		char yoil = getYoil(myDate);
+		
+//		model.addAttribute("myDate", date);
+//		model.addAttribute("yoil", yoil);
+		
+//		mv.addObject("year", year);
+//		mv.addObject("month", month);
+//		mv.addObject("day", day);
+//		mv.addObject("yoil", yoil);
+//		
+//		mv.setViewName("yoil");
+		
+		//mv는 모델과 뷰 둘다 반환
+//		return mv;
+		
+		// WEB-INF/views/yoil.jsp를 보여줘라!
+		return "yoil";
+		
+		
+		
+		
+		
+		
+		
+		
+		// 출력 관심사 분리
+		// 3. 출력
+		
+		// 1) 콘솔에 출력
+//		System.out.println(year + "년" + month + "월" + day + "일은 ");
+//		System.out.println(yoil + "요일입니다.");
+//		
+//		// 2) 브라우저에 출력
+//		// 브라우저는 출력하는 정보가 text인지 bin인지 모름
+//		// 또 text의 인코딩이 뭔지 알려줌
+//		response.setContentType("text/html");
+//		response.setCharacterEncoding("utf-8");
+//		PrintWriter out = response.getWriter();
+//		// 브라우저에 결과를 주려면 out.println
+//		out.println(year + "년" + month + "월" + day + "일은 ");
+//		out.println(yoil + "요일입니다.");
+//		// <br> 태그가 없어서 줄바꿈은 안됌		
+	}
+
+	private boolean isValid(Mydate date) {
+		// TODO Auto-generated method stub
+		return isValid(date.getYear(), date.getMonth(), date.getDay());
+	}
+
+	private @ModelAttribute("yoil") char getYoil(Mydate myDate) {
+		// TODO Auto-generated method stub
+		return getYoil(myDate.getYear(), myDate.getMonth(), myDate.getDay());
+	}
+
+	private boolean isValid(int year, int month, int day) {
+		
+		if(year==-1 || month==-1 || day==-1)
+			return false;
+		return (1<=month && month<=12) && (1<=day && day<=31);
+	}
+
+	private char getYoil(int year, int month, int day) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(year, month-1 ,day);
+		
+		// 1:일요일 , 2:월요일
+		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+		return " 일월화수목금토".charAt(dayOfWeek);
+	}
+
+}

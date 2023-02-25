@@ -5,7 +5,9 @@ import java.util.Calendar;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 // Ctrl+Shift+O 자동 import
@@ -18,7 +20,7 @@ public class YoilTellerMVC {
 	@RequestMapping("/getYoilMVC")
 	// HttpServletRequest 사용자 param 받는 객체
 	// HttpServletResponse 브라우저에 출력해주는 객체
-	public String main(int year, int month, int day,Model model) throws IOException {
+	public String main(int year,int month, int day,Model model) throws IOException {
 		
 		ModelAndView mv = new ModelAndView();
 		
