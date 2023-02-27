@@ -27,7 +27,6 @@ public class YoilTellerMVC6 {
 		
 		ex.printStackTrace();
 		
-		sys
 		
 		return "yoilError";
 	}
